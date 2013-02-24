@@ -6,7 +6,7 @@ require File.join(File.dirname(__FILE__), '/doodler/pixelizer')
 require 'chunky_png'
 
 module Doodler
-  NoBaselineImageFound = "Hmm, I didn't see any picture pass in.."
+  NoImageFound = "Hmm, I didn't see any picture here.."
   ImageSizeInconsistency = "Oops, the two pictures have different sizes.."
   FailToImprove = "Ah, my doodling doesn't look like the picture you provided at all! Let me try again.."
 
@@ -15,6 +15,6 @@ module Doodler
       image_path = File.join(File.dirname(__FILE__), '../image/baseline/baseline_1.png')
       image = ChunkyPNG::Image.from_file(image_path)
     end
-    Doodler::Runner.new(image).draw
+    Doodler::Runner.new(image).draw!
   end
 end
