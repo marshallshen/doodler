@@ -1,16 +1,5 @@
 module Doodler
-  class Runner
-    include ::ChunkyPNG::Color
-    attr_accessor :baseline_image, :output_image, :diff, :attempts
-
-    def initialize(image)
-      raise Doodler::NoBaselineImageFound unless image
-      @baseline_image = image
-      @output_image = ChunkyPNG::Image.new(image.width, image.height, WHITE)
-      @diff = difference(@output_image, @baseline_image)
-      @attempts = 0
-    end
-
+  class Runner < Base
     def draw
       while @diff >= 10000
         adjust
@@ -20,9 +9,7 @@ module Doodler
     end
 
     def render
-      # need a better metadata, write it this way
-      # this is pure laziness..
-      @output_image.save("image/render/#{Time.now.to_i}.png")
+      @output_image.save("image/render/#{@attempts}.png")
     end
 
     def close

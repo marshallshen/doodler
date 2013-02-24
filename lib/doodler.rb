@@ -1,6 +1,8 @@
+require File.join(File.dirname(__FILE__), '/doodler/base')
 require File.join(File.dirname(__FILE__), '/doodler/version')
 require File.join(File.dirname(__FILE__), '/doodler/runner')
 require File.join(File.dirname(__FILE__), '/doodler/strategy')
+require File.join(File.dirname(__FILE__), '/doodler/pixelizer')
 require 'chunky_png'
 
 module Doodler
