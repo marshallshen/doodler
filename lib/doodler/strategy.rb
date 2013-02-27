@@ -1,13 +1,27 @@
 module Doodler
   class Strategy
-    attr_accessor :subject, :height, :width
+    attr_accessor :subject, :height, :width 
     def initialize(subject)
       @subject = subject
       @height = subject.height
       @width = subject.width
     end
 
-    def randomized
+    def bubblize
+      bubble_hash = {}
+      centre = [rand(width), rand(height)]
+      color = ChunkyPNG::Color.rgba(rand(256), rand(256), rand(256), rand(256))
+      radius = 5
+      
+      # TODO: refactor bubble construction
+      [center, color, radius].each {|attr| bubble_hash[attr.to_sym] = attr}
+ 
+      bubble = Doodle::Bubble.new(bubble_hash)
+
+      subject = bubble.fill_for(subject)
+    end
+
+    def randomize
       # The method doesn't work well..
       # The algorithm is not learning from the mistakes
       start_width = rand(width)
