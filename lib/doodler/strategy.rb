@@ -1,19 +1,29 @@
 module Doodler
   class Strategy
-    attr_accessor :baseline_image, :output_image, :height, :width 
-    def initialize(baseline_image, output_image)
-      @baseline_image = baseline_image
-      @output_image = output_image
-      @height = baseline_image.height
-      @width = baseline_image.width
+    PHASES = {
+      :spray => Proc.new{@radius = 8; @bubbles_per_attempt = 4},
+      :stretch => Proc.new{@radius = 4; @bubbles_per_attempt = 2},
+      :clean => Proc.new{@radius = 2; @bubbles_per_attempt = 1}
+    }.freeze
+    attr_accessor :baseline_image, :output_image, :height, :width, :phase 
+    def initialize(options)
+      @baseline_image = options[:baseline_image]
+      @output_image = options[:output_image]
+      @phase = phase
+      @height = @baseline_image.height
+      @width = @baseline_image.width
     end
 
     def bubblize
-      x = rand(@width); y = rand(@height); radius = 5
-      init_color = ChunkyPNG::Color(@baseline_image[x, y])
-      centre = [x, y]
-      @output_image = Doodler::Bubble.new(radius, centre, init_color).fill_for(@output_image)
+      instance_eval PHASES[@phase.to_sym]
+      @bubbles_per_attempt.times do
+        x = rand(@width); y = rand(@height); radius = @radius
+        init_color = ChunkyPNG::Color(@baseline_image[x, y])
+        centre = [x, y]
+        @output_image = Doodler::Bubble.new(radius, centre, init_color).fill_for(@output_image)
+      end
       return @output_image
+    # rescue for debugging..
     rescue => e
       puts e.backtrace
       raise
@@ -41,6 +51,8 @@ module Doodler
     end
 
     def pixelize!(size=10)
+      # stole the code from web,
+      # great thanks to the genius who wrote this
       [[:row, height], [:column, width]].each do |orientation, length|
         for i in 0...length
           pixelated = []; subject.send(orientation, i).each_slice(size) do |slice|

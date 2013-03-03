@@ -1,13 +1,7 @@
 module Doodler
   class Bubble
-    PHASES = {
-      :spray => Proc.new{@radius = 8; @bubbles_per_attempt = 5},
-      :stretch => Proc.new{@radius = 4; @bubbles_per_attempt = 3},
-      :clean => Proce.new{@radius = 2; @bubbles_per_attempt = 1}
-    }.freeze
-
-    attr_accessor :centre, :radius, :color, :bubbles_per_attempt
-    def initialize(radius, centre, color, bubbles_per_attempt = 1)
+    attr_accessor :centre, :radius, :color
+    def initialize(radius, centre, color)
       @radius = radius || 1
       @centre = centre
       @color = color

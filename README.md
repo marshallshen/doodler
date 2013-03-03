@@ -1,6 +1,13 @@
 # Doodler
 
-TODO: Write a gem description
+###TODO:
+- Add mode to strategy (spray, stretch, clean)
+- Add new style (cubify)
+- Implement Rake tasks
+- Change the output image rendering mechanism
+- Finish tests
+- Write a gem description
+
 
 ## Installation
 

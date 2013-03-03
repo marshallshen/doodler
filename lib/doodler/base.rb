@@ -1,13 +1,13 @@
 module Doodler
   class Base
     include ::ChunkyPNG::Color
-    attr_accessor :baseline_image, :output_image, :diff, :attempts
+    attr_accessor :baseline_image, :output_image, :diffs, :attempts
 
     def initialize(image, output_image = nil)
       raise Doodler::NoImageFound unless image
       @baseline_image = image
       @output_image = output_image || ChunkyPNG::Image.new(image.width, image.height, WHITE)
-      @diff = difference(@output_image, @baseline_image)
+      @diffs = Doodler::Tracker.new(difference(@output_image, @baseline_image))
       @attempts = 0
     end
 
