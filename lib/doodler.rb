@@ -3,6 +3,7 @@ require File.join(File.dirname(__FILE__), '/doodler/version')
 require File.join(File.dirname(__FILE__), '/doodler/runner')
 require File.join(File.dirname(__FILE__), '/doodler/strategy')
 require File.join(File.dirname(__FILE__), '/doodler/pixelizer')
+require File.join(File.dirname(__FILE__), '/doodler/bubble')
 require 'chunky_png'
 
 module Doodler

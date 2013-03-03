@@ -23,7 +23,8 @@ module Doodler
 
     def adjust
       notify
-      adjusted_image = Doodler::Strategy.new(@output_image).randomize
+      strategy = Doodler::Strategy.new(@baseline_image,@output_image)
+      adjusted_image = strategy.bubblize
       new_diff = difference(adjusted_image, @baseline_image) 
       raise Doodler::FailToImprove if new_diff >= @diff
       @diff = new_diff

@@ -1,29 +1,26 @@
 module Doodler
   class Strategy
-    attr_accessor :subject, :height, :width 
-    def initialize(subject)
-      @subject = subject
-      @height = subject.height
-      @width = subject.width
+    attr_accessor :baseline_image, :output_image, :height, :width 
+    def initialize(baseline_image, output_image)
+      @baseline_image = baseline_image
+      @output_image = output_image
+      @height = baseline_image.height
+      @width = baseline_image.width
     end
 
     def bubblize
-      bubble_hash = {}
-      centre = [rand(width), rand(height)]
-      color = ChunkyPNG::Color.rgba(rand(256), rand(256), rand(256), rand(256))
-      radius = 5
-      
-      # TODO: refactor bubble construction
-      [center, color, radius].each {|attr| bubble_hash[attr.to_sym] = attr}
- 
-      bubble = Doodle::Bubble.new(bubble_hash)
-
-      subject = bubble.fill_for(subject)
+      x = rand(@width); y = rand(@height); radius = 5
+      init_color = ChunkyPNG::Color(@baseline_image[x, y])
+      centre = [x, y]
+      @output_image = Doodler::Bubble.new(radius, centre, init_color).fill_for(@output_image)
+      return @output_image
+    rescue => e
+      puts e.backtrace
+      raise
     end
 
     def randomize
-      # The method doesn't work well..
-      # The algorithm is not learning from the mistakes
+      # naive method
       start_width = rand(width)
       start_height = rand(height)
       color = ChunkyPNG::Color.rgba(rand(256), rand(256), rand(256), rand(256))
@@ -41,6 +38,19 @@ module Doodler
         end
       end
       subject
+    end
+
+    def pixelize!(size=10)
+      [[:row, height], [:column, width]].each do |orientation, length|
+        for i in 0...length
+          pixelated = []; subject.send(orientation, i).each_slice(size) do |slice|
+            pixelated += [ChunkyPNG::Color.rgba(*[:r,:g,:b,:a].map{|chan| 
+              (slice.map{|c| ChunkyPNG::Color.send(chan, c)}.inject(0.0){|sum, v| sum += v} / slice.length).round
+            })] * slice.length
+          end
+          subject.send("replace_#{orientation}!", i, pixelated)
+        end
+      end
     end
   end
 end
