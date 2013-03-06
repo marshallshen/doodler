@@ -2,8 +2,8 @@ module Doodler
   class Tracker
     attr_accessor :queue, :size
     def initialize(element=nil)
-      @queue = [elment.to_i]
-      @size = Doodler::TrackerSize || 5
+      @queue = [element.to_i]
+      @size = Doodler::TrackSize || 5
     end
 
     def enqueue(element)
@@ -16,21 +16,31 @@ module Doodler
     end
 
     def self.track_phase(queue)
-      case mean
-      when mean >= 10
+      return :spray if queue.size == 0
+      m = mean(queue)
+      case
+      when m >= 10 
         :spray
-      when (mean < 10) && (mean > 5)
+      when (m < 10) && (m >= 5)
         :stretch
-      else
+      when (m < 5) && (m >= 3)
         :clean
+      else
+        :decorate
       end
     end
 
     private
-    def self.mean
-      ((@queue.inject(0){|init, ele| init + ele}).to_f)/(@queue.size.to_f)
-      # alternative
-      # @queue.instance_eval { reduce(:+) / @queue.size.to_f }
+    # queue records the latest 5 diffs
+    # output is the mean of the difference between adjacent diffs
+    def self.mean(queue)
+      return 0 if queue.size <= 1
+      array = [].tap do |x| 
+       for index in 1..(queue.size-1)
+         x << queue[index] - queue[(index-1)]
+       end
+      end
+      ((array.inject(0){|init, ele| init + ele}).to_f)/(array.size.to_f)
     end
   end
 end

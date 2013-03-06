@@ -1,13 +1,6 @@
 # Doodler
-
-###TODO:
-- Add mode to strategy (spray, stretch, clean)
-- Add new style (cubify)
-- Implement Rake tasks
-- Change the output image rendering mechanism
-- Finish tests
-- Write a gem description
-
+Doodler is a Ruby Gem for Image Processing, it tries to redraw pictures
+in human-like fashion
 
 ## Installation
 
@@ -24,8 +17,19 @@ Or install it yourself as:
     $ gem install doodler
 
 ## Usage
+```ruby
+IMAGE_PATH="image/baseline/baseline_4.png" rake draw
+```
 
 TODO: Write usage instructions here
+
+## TODO
+
+- Add new style (cubify)
+- Implement Rake tasks
+- Change the output image rendering mechanism
+- Finish tests
+- Write a gem description
 
 ## Contributing
 

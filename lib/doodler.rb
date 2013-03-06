@@ -10,14 +10,12 @@ module Doodler
   NoImageFound = "Hmm, I didn't see any picture here.."
   ImageSizeInconsistency = "Oops, the two pictures have different sizes.."
   FailToImprove = "Hm, my doodling doesn't look like the picture you provided at all! Let me try again.."
+  Exit = "I am done drawing. Go check out how I do!"
 
-  TrackeSize = 5 # help doodler decide how fast to draw
+  TrackSize = 5 # determine how fast to draw
+  CheckPoint = 10000 # determine how similar the output image should be
 
-  def self.draw(image=nil)
-    unless image
-      image_path = File.join(File.dirname(__FILE__), '../image/baseline/baseline_1.png')
-      image = ChunkyPNG::Image.from_file(image_path)
-    end
+  def self.draw(image)
     Doodler::Runner.new(image).draw!
   end
 end

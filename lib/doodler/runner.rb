@@ -1,7 +1,7 @@
 module Doodler
   class Runner < Base
     def draw!
-      while @diff >= 10000
+      while @diffs.queue.last >= Doodler::CheckPoint
         adjust
         render
       end
@@ -9,7 +9,7 @@ module Doodler
     end
 
     def render
-      @output_image.save("image/render/#{@attempts}.png")
+      @output_image.save("image/render/output.png")
     end
 
     def close
@@ -18,16 +18,16 @@ module Doodler
     end
 
     def notify
-      puts "Doodler is drawing, attempt #{@attempts}, difference: #{@diff}---------\n"
+      puts "Doodler is drawing, attempt #{@attempts}, difference: #{@diffs.queue.first}, technique: #{phase}---------\n"
     end
 
     def phase
-      Doodler::Tracker.track_phase(@diffs)
+      Doodler::Tracker.track_phase(@diffs.queue)
     end
 
     def perception
       {:baseline_image => @baseline_image,
-       :output_image => @ouput_image,
+       :output_image => @output_image,
        :phase => phase }
     end
 
@@ -36,13 +36,13 @@ module Doodler
       strategy = Doodler::Strategy.new(perception.to_hash)
       adjusted_image = strategy.bubblize
       new_diff = difference(adjusted_image, @baseline_image) 
-      raise Doodler::FailToImprove if new_diff >= @diffs.last
+      raise Doodler::FailToImprove if new_diff >= @diffs.queue.last
       @diffs.enqueue(new_diff)
       @output_image = adjusted_image
       @attempts += 1
     rescue Exception => e
       puts e.message
-      retry
+      retry if e.message == Doodler::FailToImprove
     end
   end
 end
