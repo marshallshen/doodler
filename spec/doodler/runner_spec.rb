@@ -17,5 +17,12 @@ describe Doodler::Runner do
         subject.draw!
       end
     end
+
+    describe "#adjust" do
+      it "notifies when doodler is drawing"
+      it "initializes a strategy"
+      it "compares the difference of the output image and new image"
+      it "raise FailToImprove if Doodler doodles badly"
+    end
   end
 end
