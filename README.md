@@ -25,8 +25,9 @@ Or install it yourself as:
 ## Usage
 ```ruby
 IMAGE_PATH="image/baseline/baseline_1.png" rake draw
-Doodler starts drawing! ...
-Doodle completes drawing! Image is saved in image/render/output.png
+
+> Doodler starts drawing! ...
+> Doodle completes drawing! Image is saved in image/render/output.png
 ```
 
 ## Contributing
