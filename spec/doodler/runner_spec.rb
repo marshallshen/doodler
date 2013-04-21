@@ -1,28 +1,24 @@
 require 'spec_helper'
 
 describe Doodler::Runner do
-  let(:image) {mock("original image", :width => 100, :height => 100)}
-  describe "#draw" do
-    before do
-      Doodler::Runner.any_instance.stub(:adjust)
-      Doodler::Runner.any_instance.stub(:render)
-      Doodler::Runner.any_instance.stub(:close)
-    end
+  let(:image) {mock("test image", :width => 100, :height => 100)}
+  let(:strategy) { mock("strategy") }
 
-    context "when the output image is similar to the original image" do
-      it "should close the process" do
-        Doodler::Runner.any_instance.stub(:difference).and_return(999)
-        subject = Doodler::Runner.new(image)
-        subject.should_receive(:close)
-        subject.draw!
+  describe "#draw" do
+
+    context "#strategy" do
+      it "starts drawing with a default strategy" do
+        Doodler::Strategy.should_receive(:new).with(image).and_return(strategy)
+        strategy.should_receive(:bubblize)
+        Doodler::Runner.draw!(image, nil)
+      end
+
+      it "starts drawing with a choosen strategy if strategy is passed in param" do
+        Doodler::Strategy.should_receive(:new).with(image).and_return(strategy)
+        strategy.should_receive(:textify)
+        Doodler::Runner.draw!(image, :textify)
       end
     end
 
-    describe "#adjust" do
-      it "notifies when doodler is drawing"
-      it "initializes a strategy"
-      it "compares the difference of the output image and new image"
-      it "raise FailToImprove if Doodler doodles badly"
-    end
   end
 end

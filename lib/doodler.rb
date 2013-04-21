@@ -1,10 +1,8 @@
-require File.join(File.dirname(__FILE__), '/doodler/base')
 require File.join(File.dirname(__FILE__), '/doodler/version')
 require File.join(File.dirname(__FILE__), '/doodler/runner')
 require File.join(File.dirname(__FILE__), '/doodler/strategy')
-require File.join(File.dirname(__FILE__), '/doodler/bubble')
-require File.join(File.dirname(__FILE__), '/doodler/tracker')
 require 'chunky_png'
+require 'pry'
 
 module Doodler
   NoImageFound = "Hmm, I didn't see any picture here.."
@@ -12,10 +10,8 @@ module Doodler
   FailToImprove = "Hm, my doodling doesn't look like the picture you provided at all! Let me try again.."
   Exit = "I am done drawing. Go check out how I do!"
 
-  TrackSize = 5 # determine how fast to draw
-  CheckPoint = 10000 # determine how similar the output image should be
-
-  def self.draw(image)
-    Doodler::Runner.new(image).draw!
+  def self.draw(image, strategy)
+    raise Doodler::NoImageFound unless image
+    Doodler::Runner.draw!(image, strategy)
   end
 end

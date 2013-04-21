@@ -7,7 +7,7 @@ Gem::Specification.new do |gem|
   gem.name          = "doodler"
   gem.version       = Doodler::VERSION
   gem.authors       = ["Marshall Shen"]
-  gem.email         = ["fengyuan-shen@uiowa.edu"]
+  gem.email         = ["mshen@groupon.com"]
   gem.description   = %q{TODO: Write a gem description}
   gem.summary       = %q{TODO: Write a gem summary}
   gem.homepage      = ""
