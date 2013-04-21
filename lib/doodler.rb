@@ -1,8 +1,8 @@
 require File.join(File.dirname(__FILE__), '/doodler/version')
 require File.join(File.dirname(__FILE__), '/doodler/runner')
+require File.join(File.dirname(__FILE__), '/doodler/notification')
 require File.join(File.dirname(__FILE__), '/doodler/strategy')
 require 'chunky_png'
-require 'pry'
 
 module Doodler
   NoImageFound = "Hmm, I didn't see any picture here.."

@@ -1,6 +1,7 @@
 module Doodler
   class Strategy
     include ::ChunkyPNG::Color
+    include Doodler::Notification
 
     attr_accessor :image
 
@@ -9,37 +10,38 @@ module Doodler
     end
 
     def bubblize
-      puts " Start drawing! #{self.class}:bubblize_start"
-      size = 4 # default radius
-      (1...height).to_a.each_slice(size) do |veritical|
-        (1...width).to_a.each_slice(size) do |horizontal|
-          left = horizontal.min; right = horizontal.max
-          down = veritical.min; up = horizontal.max
-          centre = [(left + right)/2 , (up + down)/2 ]
-          color = image[(left + right)/2 , (up + down)/2]
+      notify_start
 
-          (left..right).to_a.each do |x|
-            (down..up).to_a.each do |y|
-              image[x, y] = color if distance_from_centre(centre, x, y) <= size
-            end
-            puts "bubblizing... I am at #{centre}.. \n"
+      50000.times do
+        centre = [rand(width), rand(height)] ; radius = rand(3)
+        color = ChunkyPNG::Color(image[centre[0], centre[1]])
+
+        left = [0, centre[0] - radius].max
+        right = [centre[0] + radius, (width-1)].min
+        up = [centre[1] + radius, (height-1)].min
+        down = [0, centre[1] - radius].max
+
+        (left..right).to_a.each do |x|
+          (down..up).to_a.each do |y|
+            image[x,y] = color if distance_from_centre(centre, x, y) <= radius
           end
-
         end
 
-        render(image)
       end
 
-      puts " I am done! #{self.class}:bubblize_end"
+      render
+      notify_complete
     end
 
     def cubify
+      # another method
     end
 
     def textify
+      # another method
     end
 
-    def render(image)
+    def render
       image.save("image/render/output.png")
     end
 

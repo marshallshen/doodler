@@ -2,6 +2,12 @@
 Doodler is a Ruby Gem for Image Processing, it tries to redraw pictures
 in human-like fashion
 
+## Doodler 1.1 updates
+
+- Speed up image recreating
+- Improve test coverage
+- Diversify image processing methods (bubblize, cubify, textify)
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -18,18 +24,10 @@ Or install it yourself as:
 
 ## Usage
 ```ruby
-IMAGE_PATH="image/baseline/baseline_4.png" rake draw
+IMAGE_PATH="image/baseline/baseline_1.png" rake draw
+Doodler starts drawing! ...
+Doodle completes drawing! Image is saved in image/render/output.png
 ```
-
-TODO: Write usage instructions here
-
-## TODO
-
-- Add new style (cubify)
-- Implement Rake tasks
-- Change the output image rendering mechanism
-- Finish tests
-- Write a gem description
 
 ## Contributing
 

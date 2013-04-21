@@ -5,7 +5,6 @@ describe Doodler::Runner do
   let(:strategy) { mock("strategy") }
 
   describe "#draw" do
-
     context "#strategy" do
       it "starts drawing with a default strategy" do
         Doodler::Strategy.should_receive(:new).with(image).and_return(strategy)
@@ -19,6 +18,12 @@ describe Doodler::Runner do
         Doodler::Runner.draw!(image, :textify)
       end
     end
+  end
 
+  describe "#render" do
+    it "saves image to the right directory" do
+      image.should_receive(:save).with("image/render/output.png")
+      Doodler::Strategy.new(image).render
+    end
   end
 end
