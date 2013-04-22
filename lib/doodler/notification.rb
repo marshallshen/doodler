@@ -5,7 +5,7 @@ module Doodler
     end
 
     def notify_complete
-      puts "Doodle completes drawing! Image is saved in image\/render\/output.png \n"
+      puts "Doodler completes drawing! Image is saved in image\/render\/output.png \n"
     end
   end
 end

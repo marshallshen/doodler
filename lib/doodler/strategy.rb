@@ -1,6 +1,5 @@
 module Doodler
   class Strategy
-    include ::ChunkyPNG::Color
     include Doodler::Notification
 
     attr_accessor :image
