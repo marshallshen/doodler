@@ -13,7 +13,7 @@ module Doodler
       notify_start
 
       50000.times do
-        centre = [rand(width), rand(height)] ; radius = rand(3)
+        centre = [rand(width), rand(height)] ; radius = rand(5)
         color = ChunkyPNG::Color(image[centre[0], centre[1]])
 
         left = [0, centre[0] - radius].max

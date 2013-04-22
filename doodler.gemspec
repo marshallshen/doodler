@@ -8,9 +8,9 @@ Gem::Specification.new do |gem|
   gem.version       = Doodler::VERSION
   gem.authors       = ["Marshall Shen"]
   gem.email         = ["mshen@groupon.com"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
-  gem.homepage      = ""
+  gem.description   = "Ruby image processing package using ChunkyPNG"
+  gem.summary       = "Ruby image processing package using ChunkyPNG"
+  gem.homepage      = "https://github.com/marshallshen/doodler"
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
