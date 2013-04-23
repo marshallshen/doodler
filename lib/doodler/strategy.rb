@@ -29,22 +29,43 @@ module Doodler
       end
 
       render
+
       notify_complete
     end
 
     def cubify
-      # another method
+      notify_start
+
+      50000.times do
+        start = [rand(width), rand(height)] ; size = rand(5)
+        color = ChunkyPNG::Color(image[start[0], start[1]])
+
+        left = start[0]
+        right = [(start[0]+size), width-1].min
+        up = [(start[1]+size), height-1].min
+        down = start[1]
+
+        (left..right).to_a.each do |x|
+          (down..up).to_a.each do |y|
+            image[x,y] = color
+          end
+        end
+
+      end
+
+      render
+
+      notify_complete
     end
 
     def textify
       # another method
     end
 
+    private
     def render
       image.save("image/render/output.png")
     end
-
-    private
     def height
       image.height
     end
